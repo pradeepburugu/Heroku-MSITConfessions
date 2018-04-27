@@ -1,0 +1,5 @@
+flask
+gunicorn
+Flask-SQLAlchemy
+Jinja2
+MarkupSafe
