@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = 'random string'
 
-UPLOAD_FOLDER = '/static'
+UPLOAD_FOLDER = '/app/static/'
 
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif','txt','pdf','JPG'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -153,7 +153,7 @@ def upload_file():
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			print ("Is saving.....")
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			file.save(os.path.join(app.config["/app/static/"], filename))
 			# return render_template("post.html",name=file.filename)
 			print ("Saved")
 			return redirect(url_for('uploaded_file',filename=file.filename,title=title,desc=desc))
