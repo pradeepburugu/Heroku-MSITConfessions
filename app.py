@@ -154,7 +154,7 @@ def upload_file():
 			filename = secure_filename(file.filename)
 			MYDIR = os.path.dirname(__file__)
 			print ("Is saving.....", MYDIR)
-			os.path.join(MYDIR + "/" + app.config['UPLOAD_FOLDER'] + "/" + filename)
+			file.save(os.path.join(MYDIR + "/" + app.config['UPLOAD_FOLDER'] + "/" + filename))
 			# file.save(os.path.join(app.config["/app/static/"], filename))
 			# return render_template("post.html",name=file.filename)
 			print ("Saved")
