@@ -129,6 +129,13 @@ def about():
 			gender=confession1.gender
 			mobile=confession1.phone
 			return render_template('about.html',Name=Name,Email=Email,Birthday=Birthday,gender=gender,mobile=mobile)
+		if(confession1.email==y):
+			Name=confession1.name
+			Email=confession1.email
+			Birthday=confession1.Birthday
+			gender=confession1.gender
+			mobile=confession1.phone
+			return render_template('about.html',Name=Name,Email=Email,Birthday=Birthday,gender=gender,mobile=mobile)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -215,8 +222,8 @@ def sign(name,email):
 		msg="error occured"
 	session['email'] = email
 	session['logged_in'] = True
-	global x
-	x=email
+	global y
+	y=email
 	return redirect(url_for('index'))
 
 @app.route('/logout')
