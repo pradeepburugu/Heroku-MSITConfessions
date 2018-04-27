@@ -6,7 +6,7 @@ from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from sqlalchemy import update
-from flask.ext.heroku import Heroku
+from flask_heroku import Heroku
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
