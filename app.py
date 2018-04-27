@@ -149,11 +149,13 @@ def upload_file():
 		if file.filename == '':
 			flash('No selected file')
 			return redirect(request.url)
-
+		print("path doesn't know....")
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
+			print ("Is saving.....")
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			# return render_template("post.html",name=file.filename)
+			print ("Saved")
 			return redirect(url_for('uploaded_file',filename=file.filename,title=title,desc=desc))
 	error="error occured"
 	return render_template("post.html",error=error)
