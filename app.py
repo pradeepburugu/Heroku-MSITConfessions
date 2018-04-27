@@ -139,11 +139,11 @@ def upload_file():
 	
 		# check if post request has file path
 		if 'file' not in request.files:
-			print ("return.............")
+			print "return............."
 			flash('No file part')
 			return redirect(request.url)
 		file = request.files['file']
-		print (file)
+		print file
 		# if user does not select file, browser also
 		# submit a empty part without filename
 		if file.filename == '':
@@ -164,7 +164,7 @@ def allowed_file(filename):
 
 @app.route('/uploads/<filename>/<title>/<desc>',methods=['GET', 'POST'])
 def uploaded_file(filename,title,desc):
-	print (filename)
+	print filename
 	ImagesAll = Image(imagename=filename,title=title,desc=desc,upvotes=0,downvotes=0,comment="comments goes here \n")
 	db.session.add(ImagesAll)
 	db.session.commit()
@@ -226,4 +226,4 @@ def logout():
 
 if __name__ =='__main__':
 	
-	app.run(port=6472)
+	app.run(port=3522)
