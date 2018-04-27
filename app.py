@@ -155,8 +155,6 @@ def upload_file():
 			MYDIR = os.path.dirname(__file__)
 			print ("Is saving.....", MYDIR)
 			file.save(os.path.join(MYDIR + "/" + app.config['UPLOAD_FOLDER'] + "/" + filename))
-			# file.save(os.path.join(app.config["/app/static/"], filename))
-			# return render_template("post.html",name=file.filename)
 			print ("Saved")
 			return redirect(url_for('uploaded_file',filename=file.filename,title=title,desc=desc))
 	error="error occured"
