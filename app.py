@@ -6,16 +6,17 @@ from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from sqlalchemy import update
-
+from flask.ext.heroku import Heroku
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
 
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+# app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
+heroku = Heroku(app)
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = 'random string'
 
-UPLOAD_FOLDER = '/static/'
+UPLOAD_FOLDER = '/static'
 
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif','txt','pdf','JPG'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
