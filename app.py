@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = 'random string'
 
-UPLOAD_FOLDER = '/Temp'
+UPLOAD_FOLDER = '/static/'
 
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif','txt','pdf','JPG'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
