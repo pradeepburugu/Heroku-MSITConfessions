@@ -6,14 +6,13 @@ from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from sqlalchemy import update
-from flask_heroku import Heroku
+
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
 
-# app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
-heroku = Heroku(app)
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///confessions.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = 'random string'
 
 UPLOAD_FOLDER = '/static'
@@ -226,5 +225,4 @@ def logout():
 	return redirect(url_for('index'))
 
 if __name__ =='__main__':
-	
 	app.run(port=3522)
