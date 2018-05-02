@@ -6,6 +6,7 @@ from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from sqlalchemy import update
+from sqlalchemy import desc
 
 
 app = Flask(__name__) # create the application instance :)
@@ -39,6 +40,11 @@ class Image(db.Model):
 	upvotes =db.Column(db.Integer)
 	downvotes =db.Column(db.Integer)
 	comment = db.Column(db.String(255))
+
+class Like(db.Model):
+	__tablename__='votes'
+	likes_id =db.Column(db.String(255),primary_key=True)
+
 
 db.create_all()
 
@@ -102,7 +108,8 @@ def index():
 		email = session['email']
 		image1 = "SELECT * FROM images"
 		data1 = db.engine.execute(image1).fetchall()
-		return render_template('main.html',email=email,name=data1)
+		data2=reversed(data1)
+		return render_template('main.html',email=email,name=data2)
 	return render_template('page1.html')
 
 def is_valid(email,password):
@@ -123,13 +130,6 @@ def about():
 	data = db.engine.execute(stmt).fetchall()
 	for confession1 in data:
 		if(confession1.email==x):
-			Name=confession1.name
-			Email=confession1.email
-			Birthday=confession1.Birthday
-			gender=confession1.gender
-			mobile=confession1.phone
-			return render_template('about.html',Name=Name,Email=Email,Birthday=Birthday,gender=gender,mobile=mobile)
-		if(confession1.email==y):
 			Name=confession1.name
 			Email=confession1.email
 			Birthday=confession1.Birthday
@@ -162,7 +162,6 @@ def upload_file():
 			MYDIR = os.path.dirname(__file__)
 			print ("Is saving.....", MYDIR)
 			file.save(os.path.join(MYDIR + "/" + app.config['UPLOAD_FOLDER'] + "/" + filename))
-			print ("Saved")
 			return redirect(url_for('uploaded_file',filename=file.filename,title=title,desc=desc))
 	error="error occured"
 	return render_template("post.html",error=error)
@@ -182,17 +181,27 @@ def uploaded_file(filename,title,desc):
 @app.route('/votes/<xid>', methods=['GET', 'POST'])
 def votes(xid):
 	xid=int(xid)
+	s=x+str(xid)
 	if request.method == 'POST':
 		name = request.form['voted']
 		stmt=Image.query.filter_by(id=xid).all()[0]
-		if(name =="like"):
-			stmt.upvotes+=1
-			db.session.commit()
-			return redirect(url_for('index'))
-		else:
-			stmt.downvotes+=1
-			db.session.commit()
-			return redirect(url_for('index'))
+		stmt2=Like.query.filter_by(likes_id=s).all()
+		if(len(stmt2)==0):
+			if(name =="like"):
+				liked=Like(likes_id=s)
+				db.session.add(liked)
+				# db.session.commit()
+				stmt.upvotes+=1
+				db.session.commit()
+				return redirect(url_for('index'))
+			else:
+				liked=Like(likes_id=s)
+				db.session.add(liked)
+				stmt.downvotes+=1
+				db.session.commit()
+				return redirect(url_for('index'))
+		return redirect(url_for('index'))
+
 	return render_template("page1.html")
 
 @app.route('/comment/<xid>', methods=['GET', 'POST'])
@@ -234,4 +243,4 @@ def logout():
 	return redirect(url_for('index'))
 
 if __name__ =='__main__':
-	app.run(port=3522)
+	app.run(port=5128)
