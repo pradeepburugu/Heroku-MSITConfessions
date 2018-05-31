@@ -108,8 +108,8 @@ def index():
 		email = session['email']
 		image1 = "SELECT * FROM images"
 		data1 = db.engine.execute(image1).fetchall()
-		# data2=reversed(data1)
-		return render_template('main.html',email=email,name=data1)
+		data2=reversed(data1)
+		return render_template('main.html',email=email,name=data2)
 	return render_template('page1.html')
 
 def is_valid(email,password):
